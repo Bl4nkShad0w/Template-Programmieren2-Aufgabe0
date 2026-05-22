@@ -3,6 +3,7 @@ package org.htw.prog2.aufgabe0;
 import org.knowm.xchart.XYChart;
 import org.knowm.xchart.SwingWrapper;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 public class MyProject {
@@ -16,13 +17,31 @@ public class MyProject {
      * </ol>
      * Continue until the estimated error reaches the desired maximum error
      * @param value The value to calculate the root of
-     * @param initial The initial value to start the calculation with
+     * @param initial The initial vaqlue to start the calculation with
      * @param maxerror The maximum allowed error
      * @return An array containing the values of all iterations. The last value in the array is the final estimate.
      */
     public static double[] calculateBabylonianRoot(double value, double initial, double maxerror) {
-        // TODO: Implementieren.
-        return new double[] {initial};
+        ArrayList<Double> values = new ArrayList<Double>();
+        if (value <= 0){
+            return new double[]{0};
+        }
+        if (maxerror < 0){
+            maxerror = -maxerror;
+        }
+        double initial2 = (initial + value/initial)/2;
+        while (initial2 < initial - maxerror || initial2 > initial + maxerror){
+            // add to list
+            values.add(initial2);
+            initial = initial2;
+            initial2 = (initial + value/initial)/2;
+        }
+        double[] valuesArray = new double[values.size()];
+        for (int i = 0; i < values.size(); i++){
+            valuesArray[i] = values.get(i);
+        }
+
+        return valuesArray;
     }
 
     public static void plotData(double[] values) {
